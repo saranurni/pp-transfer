@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import renderer from "react-test-renderer";
 import App from "./App";
-import renderer from "react-test-renderer"
-import userEvent from "@testing-library/user-event"
 
 it ("renders without crashing", () => {
   const rendered = renderer.create(<App />.toJSON();
