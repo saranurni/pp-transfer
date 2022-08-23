@@ -6,7 +6,7 @@ export default function Form({ handleSubmit }) {
       onSubmit={handleSubmit}
       className="mx-auto flex w-48 flex-col items-center"
     >
-      <div className="mx-auto flex flex-col gap-y-1 text-center font-semibold">
+      <div className="mx-auto flex flex-col gap-y-1 text-center text-2xl font-semibold text-pink-500">
         <h1>Welcome!</h1>
         <label
           htmlFor="amount"
@@ -24,7 +24,7 @@ export default function Form({ handleSubmit }) {
 
       <button
         type="submit"
-        className="text-pink border-pink mx-auto flex flex-col gap-y-1 rounded border px-4 py-2 text-center  text-xl text-pink-500"
+        className="text-pink border-pink mx-auto flex flex-col items-center gap-y-1 rounded border px-4 py-2  text-center text-xl text-pink-500"
       >
         Transfer now
       </button>
