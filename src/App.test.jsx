@@ -1,28 +1,30 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import renderer from "react-test-renderer";
 import App from "./App";
 
-it ("renders without crashing", () => {
-  const rendered = renderer.create(<App />.toJSON();
-  expect(rendered).toMatchSnapshot();
-  )
-}):
+it("displays not enough funds when transfer value doesn't meet requirement", () => {
+  const balance = 100;
+  const transferAmount = 150;
+  const expectedTransferMsg = "Not enough funds.";
+  const expectedBalanceMsg = `Current Balance:${balance}`;
 
-it("displays 'Insufficient funds' when transfer value doesn't meet requirement"), () => {
-  render (<App /> );
+  render(<App />);
+  const input = screen.getByLabelText(/transfer amount:/i);
+  userEvent.type(input, transferAmount);
+  userEvent.click(screen.getByRole("button"));
 
-  const balance = screen.getByLabelText(/balance/i);
-  const input = screen.getByAltText(/input/i);
-  const button = screen.getByRole(/button/i);
+  expect(screen.getByText(expectedBalanceMsg)).toBeInTheDocument();
+  expect(screen.getByText(expectedTransferMsg)).toBeInTheDocument();
+});
 
-  userEvent.type(input, 150)
-  userEvent.click(button)
+it("prevents negative balances from occurring", () => {
+  const transferAmount = 1000;
+  const expectedMsg = "You can't transfer more than ${balance}";
 
-  expect(setMessage). toBe("Insufficient funds")
+  render(<App />);
+  const input = screen.getByLabelText(/input/i);
+  userEvent.type(input, transferAmount);
+  userEvent.click(screen.getByRole("button"));
 
-}
-
-
-
-
+  expect(screen.getByText(expectedMsg)).toBe();
+});

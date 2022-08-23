@@ -1,51 +1,38 @@
 import { useState } from "react";
 import "./App.css";
+import Form from "./components/Form/Form";
+
+const balance = 100;
 
 function App() {
-  const [message, setMessage] = useState("");
-  const [balance, setBalance] = useState(100);
-  const [amount, setAmount] = useState("");
+  const [transferStatus, setTransferStatus] = useState({ amount: 0, msg: "" });
 
-  function handleClick() {
-    if (amount <= balance) {
-      setBalance(balance - amount);
-      setMessage(`£${amount} has been transferred!`);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const transferAmount = event.target.elements[0].value;
+
+    if (transferAmount < balance) {
+      setTransferStatus({
+        amount: transferAmount,
+        msg: "You transferred",
+      });
     } else {
-      setMessage(`Insufficient funds.`);
+      setTransferStatus({
+        amount: 0,
+        msg: "Not enough funds.",
+      });
     }
-  }
-
-  const handleChange = (event) => setAmount(event.target.value);
+    event.target.reset();
+  };
 
   return (
-    <form>
-      <div className="mx-auto flex flex-col gap-y-1 font-semibold">
-        <h1>£{balance}</h1>
-        <label
-          htmlFor="value"
-          className="mx-auto flex flex-col gap-y-1 text-3xl text-pink-500 "
-          onChange={handleChange}
-        >
-          Transfer Amount:
-        </label>
-        <input
-          type="number"
-          placeholder="Enter Amount"
-          className="rounded border pl-4"
-        />
-      </div>
-
-      <button
-        type="button"
-        value="Transfer"
-        className="text-pink border-pink mx-auto flex flex-col gap-y-1 rounded border px-4 py-2 text-center  text-xl text-pink-500"
-        onClick={handleClick}
-      >
-        Transfer now
-      </button>
-
-      <p className="mx-auto text-center">{message}</p>
-    </form>
+    <>
+      <Form handleSubmit={handleSubmit} />
+      <p>You have successfully transferred {transferStatus.amount}</p>
+      <p>Current Balance:{balance - transferStatus.amount}</p>
+      <p>{transferStatus.msg}</p>
+    </>
   );
 }
 export default App;
